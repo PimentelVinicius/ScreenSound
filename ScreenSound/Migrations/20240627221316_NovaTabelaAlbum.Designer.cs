@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScreenSound.Banco;
 
@@ -11,9 +12,11 @@ using ScreenSound.Banco;
 namespace ScreenSound.Migrations
 {
     [DbContext(typeof(ScreenSoundContext))]
-    partial class ScreenSoundContextModelSnapshot : ModelSnapshot
+    [Migration("20240627221316_NovaTabelaAlbum")]
+    partial class NovaTabelaAlbum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,6 +105,7 @@ namespace ScreenSound.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BandaId"));
 
                     b.Property<string>("BandaNome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Resumo")
@@ -120,9 +124,6 @@ namespace ScreenSound.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BandaAvaliacaoId"));
 
-                    b.Property<int?>("AlbumId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BandaAvaliacaoNota")
                         .HasColumnType("int");
 
@@ -130,11 +131,10 @@ namespace ScreenSound.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BandaNome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BandaAvaliacaoId");
-
-                    b.HasIndex("AlbumId");
 
                     b.HasIndex("BandaId");
 
@@ -195,12 +195,8 @@ namespace ScreenSound.Migrations
 
             modelBuilder.Entity("ScreenSound.Modelos.AlbumAvaliacao", b =>
                 {
-                    b.HasOne("ScreenSound.Modelos.Album", null)
-                        .WithMany("Notas")
-                        .HasForeignKey("AlbumId");
-
                     b.HasOne("ScreenSound.Modelos.Banda", "Banda")
-                        .WithMany("notas")
+                        .WithMany("Notas")
                         .HasForeignKey("BandaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -224,8 +220,6 @@ namespace ScreenSound.Migrations
             modelBuilder.Entity("ScreenSound.Modelos.Album", b =>
                 {
                     b.Navigation("Musicas");
-
-                    b.Navigation("Notas");
                 });
 
             modelBuilder.Entity("ScreenSound.Modelos.Artista", b =>
@@ -237,7 +231,7 @@ namespace ScreenSound.Migrations
                 {
                     b.Navigation("Albuns");
 
-                    b.Navigation("notas");
+                    b.Navigation("Notas");
                 });
 #pragma warning restore 612, 618
         }

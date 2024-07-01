@@ -24,7 +24,7 @@ namespace ScreenSound.Menus
                 Console.WriteLine("\nMusicas:");
                 foreach(var itemMusica in musicaRecuperada)
                 {
-                    Console.WriteLine(itemMusica.Nome);
+                    Console.WriteLine(itemMusica.MusicaNome);
                 }
                 Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
                 Console.ReadKey();

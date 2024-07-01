@@ -1,25 +1,25 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Banco;
+using ScreenSound.Modelos;
 
 namespace ScreenSound.Menus;
 
 internal class MenuRegistrarAlbum : Menu
 {
-    public override void ExecutarBanda(Dictionary<string, Banda> bandasRegistradas)
+    public override void ExecutarBanda(DAL<Banda> bandaDAL)
     {
-        base.ExecutarBanda(bandasRegistradas);
+        base.ExecutarBanda(bandaDAL);
         ExibirTituloDaOpcao("Registro de álbuns");
         Console.Write("Digite a banda cujo álbum deseja registrar: ");
         string nomeDaBanda = Console.ReadLine()!;
-
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
+        var bandaSelect = bandaDAL.RecuperarPor(select => select.BandaNome.Equals(nomeDaBanda));
+        if (bandaSelect is not null)
         {
             Console.Write("Agora digite o título do álbum: ");
             string tituloAlbum = Console.ReadLine()!;
-            Banda banda = bandasRegistradas[nomeDaBanda];
-            banda.AdicionarAlbum(new Album(tituloAlbum));
-            /**
-             * ESPAÇO RESERVADO PARA COMPLETAR A FUNÇÃO
-             */
+    
+            bandaSelect.AdicionarAlbum(new Album(tituloAlbum));
+
+            bandaDAL.Atualizar(bandaSelect);
             Console.WriteLine($"O álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso!");
             Thread.Sleep(4000);
             Console.Clear();

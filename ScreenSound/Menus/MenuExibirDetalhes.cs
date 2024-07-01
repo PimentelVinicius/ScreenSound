@@ -1,25 +1,28 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Banco;
+using ScreenSound.Modelos;
 
 namespace ScreenSound.Menus;
 
 internal class MenuExibirDetalhes : Menu
 {
 
-    public override void ExecutarBanda(Dictionary<string, Banda> bandasRegistradas)
+    public override void ExecutarBanda(DAL<Banda> bandaDAL)
     {
-        base.ExecutarBanda(bandasRegistradas);
+        base.ExecutarBanda(bandaDAL);
         ExibirTituloDaOpcao("Exibir detalhes da banda");
         Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
         string nomeDaBanda = Console.ReadLine()!;
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
+        var bandaSelect = bandaDAL.RecuperarPor(select => select.BandaNome.Equals(nomeDaBanda));
+
+        if (bandaSelect is not null)
         {
-            Banda banda = bandasRegistradas[nomeDaBanda];
+            Banda banda = bandaSelect;
             Console.WriteLine(banda.Resumo);
             Console.WriteLine($"\nA média da banda {nomeDaBanda} é {banda.Media}.");
             Console.WriteLine("\nDiscografia:");
             foreach(Album album in banda.Albuns)
             {
-                Console.WriteLine($"{album.Nome} =-> {album.Media}");
+                Console.WriteLine($"{album.AlbumNome} =-> {album.Media}");
             }
             Console.WriteLine("Digite uma tecla para voltar ao menu principal");
             Console.ReadKey();

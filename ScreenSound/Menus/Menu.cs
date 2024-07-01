@@ -23,7 +23,12 @@ internal class Menu
     {
         Console.Clear();
     }
-    public virtual void ExecutarBanda(Dictionary<string, Banda> bandasRegistradas)
+    public virtual void ExecutarBanda(DAL<Banda> bandaDAL)
+    {
+        Console.Clear();
+    }
+
+    public virtual void ExecutarAlbum(DAL<Album> albumDAL)
     {
         Console.Clear();
     }

@@ -5,11 +5,12 @@ using ScreenSound.Modelos;
 var context = new ScreenSoundContext();
 var artistaDAL = new DAL<Artista>(context);
 var musicaDAL = new DAL<Musica>(context);
+var BandaDAL = new DAL<Banda>(context);
+var AlbumDAL = new DAL<Album>(context);
+//Banda Legiao = new Banda("Legiao!");
 
-Banda Legiao = new Banda("Legiao!");
-
-Dictionary<string, Banda> bandasRegistradas = new();
-bandasRegistradas.Add(Legiao.Nome, Legiao);
+//Dictionary<string, Banda> bandasRegistradas = new();
+//bandasRegistradas.Add(Legiao.BandaNome, Legiao);
 
 //try
 //{
@@ -20,7 +21,7 @@ bandasRegistradas.Add(Legiao.Nome, Legiao);
 
 //    foreach (var item in musicaDAL.Listar())
 //    {
-//        Console.WriteLine(item.Nome);
+//        Console.WriteLine(item.AlbumNome);
 //    }
 //}
 //catch(Exception ex)
@@ -32,11 +33,18 @@ bandasRegistradas.Add(Legiao.Nome, Legiao);
 
 Dictionary<int, Menu> opcoes = new();
 opcoes.Add(1, new MenuRegistrarArtista());
-opcoes.Add(2, new MenuRegistrarMusica());
-opcoes.Add(3, new MenuMostrarArtistas());
+opcoes.Add(2, new MenuMostrarArtistas());
+opcoes.Add(3, new MenuRegistrarMusica());
 opcoes.Add(4, new MenuMostrarMusicas());
 opcoes.Add(5, new MenuExibirMusicaPorAno());
 opcoes.Add(6, new MenuRegistrarBanda());
+opcoes.Add(7, new MenuMostrarBandasRegistradas());
+opcoes.Add(8, new MenuAvailiarBanda());
+opcoes.Add(9, new MenuRegistrarAlbum());
+opcoes.Add(10, new MenuAvaliarAlbum());
+opcoes.Add(11, new MenuExibirDetalhes());
+
+
 
 opcoes.Add(-1, new MenuSair());
 
@@ -58,10 +66,17 @@ void ExibirOpcoesDoMenu()
 {
     ExibirLogo();
     Console.WriteLine("\nDigite 1 para registrar um artista");
-    Console.WriteLine("Digite 2 para registrar a música de um artista");
-    Console.WriteLine("Digite 3 para mostrar todos os artistas");
+    Console.WriteLine("Digite 2 para mostrar todos os artistas");
+    Console.WriteLine("Digite 3 para registrar a música de um artista");
     Console.WriteLine("Digite 4 para exibir todas as músicas de um artista");
     Console.WriteLine("Digite 5 para exibir todas as músicas de um determinado ano");
+    Console.WriteLine("Digite 6 para registrar uma banda");
+    Console.WriteLine("Digite 7 para exibir bandas registradas");
+    Console.WriteLine("Digite 8 para avaliar uma banda");
+    Console.WriteLine("Digite 9 para registrar um album");
+    Console.WriteLine("Digite 10 para availiar um album");
+    Console.WriteLine("Digite 11 para exibir detalhes de uma banda");
+
 
     Console.WriteLine("Digite -1 para sair");
 
@@ -74,7 +89,8 @@ void ExibirOpcoesDoMenu()
         Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
         menuASerExibido.Executar(artistaDAL);
         menuASerExibido.ExecutarMusica(musicaDAL);
-        menuASerExibido.ExecutarBanda(bandasRegistradas);
+        menuASerExibido.ExecutarBanda(BandaDAL);
+        menuASerExibido.ExecutarAlbum(AlbumDAL);
         if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
     }
     else

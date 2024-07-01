@@ -1,23 +1,27 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Banco;
+using ScreenSound.Modelos;
 
 namespace ScreenSound.Menus;
 
 internal class MenuAvailiarBanda : Menu
 {
     
-    public override void ExecutarBanda(Dictionary<string, Banda> bandasRegistradas)
+    public override void ExecutarBanda(DAL<Banda> bandaDAL)
     {
-        base.ExecutarBanda(bandasRegistradas);
+        base.ExecutarBanda(bandaDAL);
         ExibirTituloDaOpcao("Avaliar banda");
         Console.Write("Digite o nome da banda que deseja avaliar: ");
         string nomeDaBanda = Console.ReadLine()!;
-        if (bandasRegistradas.ContainsKey(nomeDaBanda))
+        var bandaSelect = bandaDAL.RecuperarPor(select => select.BandaNome.Equals(nomeDaBanda));
+        if (bandaSelect is not null)
         {
-            Banda banda = bandasRegistradas[nomeDaBanda];
-            Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-            Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
+            Banda banda = bandaSelect;
+            Console.Write($"Qual a nota que a banda {bandaSelect.BandaNome} merece: ");
+            BandaAvaliacao nota = BandaAvaliacao.Parse(Console.ReadLine()!);
             banda.AdicionarNota(nota);
-            Console.WriteLine($"\nA nota {nota.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
+            bandaDAL.Atualizar(banda);
+            
+            Console.WriteLine($"\nA nota {nota.BandaAvaliacaoNota} foi registrada com sucesso para a banda {nomeDaBanda}");
             Thread.Sleep(5000);
             Console.Clear();
             

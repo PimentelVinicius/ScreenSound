@@ -15,6 +15,7 @@ public class Artista
     public string FotoPerfil { get; set; }
     public string Bio { get; set; }
     public int Id { get; set; }
+    
 
     public void AdicionarMusica(Musica musica)
     {
@@ -26,7 +27,7 @@ public class Artista
         Console.WriteLine($"Discografia do artista {Nome}");
         foreach (var musica in Musicas)
         {
-            Console.WriteLine($"Música: {musica.Nome} - Ano de lançamento:" +
+            Console.WriteLine($"Música: {musica.MusicaNome} - Ano de lançamento:" +
                 $"{musica.AnoLancamento}");
         }
     }
@@ -34,7 +35,7 @@ public class Artista
     public override string ToString()
     {
         return $@"Id: {Id}
-            Nome: {Nome}
+            AlbumNome: {Nome}
             Foto de Perfil: {FotoPerfil}
             Bio: {Bio}";
     }

@@ -8,8 +8,14 @@ namespace ScreenSound.Banco
 
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Musica> Musicas { get; set; }  
+        public DbSet<Banda> Banda { get; set; }
+        public DbSet<Album> Album { get; set; }
+        public DbSet<BandaAvaliacao> BandaAvaliacao { get; set; }
+        public DbSet<AlbumAvaliacao> AlbumAvaliacao { get; set; }
 
-        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSoundV0" +
+
+
+        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSoundV1" +
             ";Integrated Security=True;Encrypt=False;TrustServerCertificate=False" +
             ";ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
